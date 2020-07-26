@@ -69,9 +69,6 @@ public class player : MonoBehaviour
     {
         if(canmove)
         {
-
-
-
             if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
             {
                 canmove = false;
