@@ -6,6 +6,7 @@ public class player : MonoBehaviour
 {
 
     private CircleCollider2D circle2d;
+    private Animator animator;
     public LayerMask layerMask;
 
     public float speed;
@@ -18,6 +19,7 @@ public class player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         circle2d = GetComponent<CircleCollider2D>();
     }
 
@@ -31,9 +33,26 @@ public class player : MonoBehaviour
                 vector.y = 0;
             }
 
+
             vector.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0);
+            if (vector.x == 1)
+            {
+                this.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            }
+            if (vector.x==-1)
+            {
+                this.transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+            }
+            if (vector.y == 1)
+            {
+                this.transform.localScale = new Vector3(1.0f, -1.0f, 1.0f);
+            }
+            if (vector.y == -1)
+            {
+                this.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            }
 
-
+            Debug.Log(vector.x);
             RaycastHit2D hit;
 
             Vector2 start = transform.position;
@@ -42,14 +61,21 @@ public class player : MonoBehaviour
             circle2d.enabled = false;
             hit = Physics2D.Linecast(start, end, layerMask);
             circle2d.enabled = true;
-            Debug.Log(hit.transform);
             if (hit.transform != null)
             {
-            
-                Debug.Log("rrr");
                 break;
             }
+            animator.SetBool("moving", true);
 
+            if (vector.x != 0)
+            {
+                animator.SetBool("verticle", false);
+            }
+            else
+            {
+                animator.SetBool("verticle", true);
+            }
+            
             while (walkcount > currentwalkcount)
             {
 
@@ -61,7 +87,9 @@ public class player : MonoBehaviour
             currentwalkcount = 0;
         }
 
+
         canmove = true;
+        animator.SetBool("moving", false);
     }
 
     // Update is called once per frame
@@ -74,6 +102,10 @@ public class player : MonoBehaviour
                 canmove = false;
                 StartCoroutine(movec());
             }
+        }
+        if (Gamemanager.instance.win != 0)
+        {
+            Destroy(gameObject);
         }
     }
 

@@ -2,27 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Gamemanager : MonoBehaviour
 {
-    int[,] map = new int[5, 5];
-    // Start is called before the first frame update
+    public static Gamemanager instance;
+    public int feed;
+    public int win = 0;
     void Start()
     {
-        for (int i =0; i<5; i++)
-        {
-            for (int j = 0; j < 5; j++)
-            {
-                map[i, j] = 0;
-            }
-        }
-
-       
-
+        instance = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (feed==0 && win==0)
+        {
+            win = 1;
+            Debug.Log("win");
+        }
+        if (win==-1)
+        {
+            Debug.Log("lose");
+        }
     }
 }
