@@ -52,7 +52,6 @@ public class player : MonoBehaviour
                 this.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             }
 
-            Debug.Log(vector.x);
             RaycastHit2D hit;
 
             Vector2 start = transform.position;
