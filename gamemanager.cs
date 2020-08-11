@@ -18,11 +18,9 @@ public class Gamemanager : MonoBehaviour
         if (feed==0 && win==0)
         {
             win = 1;
-            Debug.Log("win");
         }
         if (win==-1)
         {
-            Debug.Log("lose");
         }
     }
 }

@@ -19,10 +19,6 @@ public class mob_random_mov : MonoBehaviour
     void Start()
     {
         circle2d = GetComponent<CircleCollider2D>();
-        move_direction();
-
-        movement(1);
-        movement(4);
     }
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -67,7 +63,12 @@ public class mob_random_mov : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (canmove == true)
+        {
+            int r = move_direction();
+
+            movement(r);
+        }
     }
     void movement(int num)
     {
@@ -80,8 +81,11 @@ public class mob_random_mov : MonoBehaviour
     }
 
 
-    void move_direction()
+    int move_direction()
     {
+        int num_arr = 0;
+        List<int> move_possible = new List<int>();
+
         circle2d.enabled = false;
         Vector2 start = transform.position;
 
@@ -102,11 +106,29 @@ public class mob_random_mov : MonoBehaviour
         left_hit = Physics2D.Linecast(start, end, layerMask);
 
         circle2d.enabled = true;
+        
+        if (up_hit.transform == null)
+        {
+            move_possible.Add(1);
+            num_arr += 1;
+        }
+        if (down_hit.transform == null)
+        {
+            move_possible.Add(2);
+            num_arr += 1;
+        }
+        if (right_hit.transform == null)
+        {
+            move_possible.Add(3);
+            num_arr += 1;
+        }
+        if (left_hit.transform == null)
+        {
+            move_possible.Add(4);
+            num_arr += 1;
+        }
 
-        Debug.Log(up_hit.transform);
-        Debug.Log(down_hit.transform);
-        Debug.Log(right_hit.transform);
-        Debug.Log(left_hit.transform);
+        return move_possible[Random.Range(0, num_arr)];
     }
 
     
